@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.moko.resources)
 }
 
@@ -12,14 +13,21 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
+
+    androidTarget()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    applyDefaultHierarchyTemplate()
+
+    cocoapods {
+        version = "1.0"
+        summary = "MyResources"
+        homepage = "www.github.com"
+        ios.deploymentTarget = "14.0"
+        framework {
+            baseName = "MyResources"
             isStatic = true
 
             export(libs.moko.resources)
@@ -34,7 +42,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.egoriku.mokoresourcesissue"
+    namespace = "com.egoriku.my.resources"
     compileSdk = 34
     defaultConfig {
         minSdk = 24

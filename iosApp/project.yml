@@ -1,0 +1,54 @@
+name: iosApp
+
+############
+# Options
+############
+
+options:
+  minimumXcodeGenVersion: 2.32.0
+  deploymentTarget:
+    iOS: 14.0
+  groupSortPosition: top
+  preGenCommand: rm -rf *.xcodeproj
+  postGenCommand: rm -rf *.xcworkspace Podfile.lock && pod install --repo-update
+
+############
+# Settings
+############
+
+settings:
+  base:
+    SWIFT_VERSION: 5.7.2
+    TARGETED_DEVICE_FAMILY: 1,2
+    MARKETING_VERSION: 10.0.0
+
+############
+# Target templates
+############
+
+targetTemplates:
+  BaseApp:
+    postBuildScripts:
+      - path: MokoResources.sh
+        name: Copy myresources resources
+    info:
+      properties:
+        CFBundleLocalizations: [
+          "en",
+          "ru"
+        ]
+
+############
+# Targets
+############
+
+targets:
+  iosApp:
+    templates: [ BaseApp ]
+    type: application
+    platform: iOS
+    deploymentTarget: 14.0
+    sources:
+      - path: iosApp
+    info:
+      path: Generated/iosApp-Info.plist

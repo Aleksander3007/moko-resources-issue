@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '14.0'
+
+def shared_pods
+  pod 'myresources', :path => '../myresources'
+end
+
+target 'iosApp' do
+  swift_version = '5.7.2'
+
+  shared_pods
+end
